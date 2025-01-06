@@ -22,7 +22,7 @@ describe('POST /auth/register', () => {
   })
 
   describe('Given all fields', () => {
-    it('Should return 201 status code', async () => {
+    it('should return 201 status code', async () => {
       // Arrange
       const userData = {
         firstName: 'raj',
@@ -40,7 +40,7 @@ describe('POST /auth/register', () => {
       expect(response.statusCode).toBe(201)
     })
 
-    it('Should return valid json response', async () => {
+    it('should return valid json response', async () => {
       // Arrange
       const userData = {
         firstName: 'raj',
@@ -60,7 +60,7 @@ describe('POST /auth/register', () => {
       )
     })
 
-    it('Should persist user in database', async () => {
+    it('should persist user in database', async () => {
       // Arrange
       const userData = {
         firstName: 'raj',
@@ -81,6 +81,27 @@ describe('POST /auth/register', () => {
       expect(users[0].firstName).toBe(userData.firstName)
       expect(users[0].lastName).toBe(userData.lastName)
       expect(users[0].email).toBe(userData.email)
+    })
+
+    it('should return an id of the created user', async () => {
+      // Arrange
+      const userData = {
+        firstName: 'raj',
+        lastName: 'singh',
+        email: 'raj@gmail.com',
+        password: 'secret',
+      }
+
+      // Act
+      const response = await request(app as any)
+        .post('/auth/register')
+        .send(userData)
+
+      // Assert
+      expect(response.body).toHaveProperty('id')
+      const repository = connection.getRepository(User)
+      const users = await repository.find()
+      expect((response.body as Record<string, string>).id).toBe(users[0].id)
     })
   })
 
