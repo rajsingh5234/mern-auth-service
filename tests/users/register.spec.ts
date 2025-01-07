@@ -3,7 +3,7 @@ import app from '../../src/app'
 import { User } from '../../src/entity/User'
 import { DataSource } from 'typeorm'
 import { AppDataSource } from '../../src/config/data-source'
-import { truncateTables } from '../utils'
+import { ROLES } from '../../src/constants'
 
 describe('POST /auth/register', () => {
   let connection: DataSource
@@ -14,7 +14,8 @@ describe('POST /auth/register', () => {
 
   beforeEach(async () => {
     // database truncate
-    await truncateTables(connection)
+    await connection.dropDatabase()
+    await connection.synchronize()
   })
 
   afterAll(async () => {
@@ -102,6 +103,26 @@ describe('POST /auth/register', () => {
       const repository = connection.getRepository(User)
       const users = await repository.find()
       expect((response.body as Record<string, string>).id).toBe(users[0].id)
+    })
+
+    it('should assign a customer rule', async () => {
+      // Arrange
+      const userData = {
+        firstName: 'raj',
+        lastName: 'singh',
+        email: 'raj@gmail.com',
+        password: 'secret',
+      }
+
+      // Act
+      await request(app as any)
+        .post('/auth/register')
+        .send(userData)
+
+      // Assert
+      const userRespository = connection.getRepository(User)
+      const users = await userRespository.find()
+      expect(users[0].role).toBe(ROLES.CUSTOMER)
     })
   })
 
