@@ -124,6 +124,51 @@ describe('POST /auth/register', () => {
       const users = await userRespository.find()
       expect(users[0].role).toBe(ROLES.CUSTOMER)
     })
+
+    it('should store hashed password in database', async () => {
+      // Arrange
+      const userData = {
+        firstName: 'raj',
+        lastName: 'singh',
+        email: 'raj@gmail.com',
+        password: 'secret',
+      }
+
+      // Act
+      await request(app as any)
+        .post('/auth/register')
+        .send(userData)
+
+      // Assert
+      const userRespository = connection.getRepository(User)
+      const users = await userRespository.find()
+      expect(users[0].password).not.toBe(userData.password)
+      expect(users[0].password).toHaveLength(60)
+      expect(users[0].password).toMatch(/^\$2b\$\d+\$/)
+    })
+
+    it('should return 400 status code if email is already exists', async () => {
+      // Arrange
+      const userData = {
+        firstName: 'raj',
+        lastName: 'singh',
+        email: 'raj@gmail.com',
+        password: 'secret',
+      }
+
+      const userRespository = connection.getRepository(User)
+      await userRespository.save({ ...userData, role: ROLES.CUSTOMER })
+
+      // Act
+      const response = await request(app as any)
+        .post('/auth/register')
+        .send(userData)
+
+      // Assert
+      expect(response.statusCode).toBe(400)
+      const users = await userRespository.find()
+      expect(users).toHaveLength(1)
+    })
   })
 
   describe('Fields are missing', () => {})
