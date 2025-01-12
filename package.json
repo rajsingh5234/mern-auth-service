@@ -15,7 +15,7 @@
       "migration:generate": "typeorm-ts-node-commonjs migration:generate",
       "migration:run": "typeorm-ts-node-commonjs migration:run",
       "migration:create": "typeorm-ts-node-commonjs migration:create",
-      "migration:generate-specific": "typeorm-ts-node-commonjs migration:generate src/migration/rename_tables -d ./src/config/data-source.ts",
+      "migration:generate-specific": "typeorm-ts-node-commonjs migration:generate src/migration/add_tenantId_foreign_key -d ./src/config/data-source.ts",
       "migration:run-specific": "typeorm-ts-node-commonjs migration:run -d src/config/data-source.ts"
    },
    "author": "Raj",
