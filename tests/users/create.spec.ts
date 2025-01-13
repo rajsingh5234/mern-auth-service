@@ -46,10 +46,12 @@ describe('POST /users', () => {
       }
 
       // Add token to cookie
-      await request(app)
+      const response = await request(app)
         .post('/users')
         .set('Cookie', [`accessToken=${adminToken};`])
         .send(userData)
+
+      expect(response.statusCode).toBe(201)
 
       const userRepository = connection.getRepository(User)
       const users = await userRepository.find()
