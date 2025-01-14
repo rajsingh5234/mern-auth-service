@@ -20,7 +20,7 @@ describe('POST /auth/login', () => {
   })
 
   afterAll(async () => {
-    await connection.destroy()
+    await connection?.destroy()
   })
 
   describe('Given all fields', () => {
@@ -51,8 +51,8 @@ describe('POST /auth/login', () => {
         ['set-cookie']: string[]
       }
       // Assert
-      let accessToken = null
-      let refreshToken = null
+      let accessToken: null | string = null
+      let refreshToken: null | string = null
       const cookies =
         (response.headers as unknown as Headers)['set-cookie'] || []
       cookies.forEach((cookie) => {
