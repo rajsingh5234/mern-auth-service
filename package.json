@@ -8,6 +8,7 @@
       "build":"tsc",
       "format:fix": "prettier . --write",
       "format:check": "prettier . --check",
+      "lint": "eslint .",
       "lint:fix": "eslint . --fix",
       "lint:check": "eslint .",
       "test": "jest --no-cache --coverage --all --runInBand",
