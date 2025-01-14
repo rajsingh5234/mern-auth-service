@@ -104,5 +104,5 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true
   },
-  "exclude": ["**/*.spec.ts", "tests", "dist"]
+  "exclude": ["**/*.spec.ts", "tests", "dist", "eslint.config.mjs", "jest.config.js",]
 }
