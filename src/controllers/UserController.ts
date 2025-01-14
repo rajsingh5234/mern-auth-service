@@ -4,7 +4,6 @@ import { CreateUserRequest, UpdateUserRequest } from '../types'
 import { validationResult } from 'express-validator'
 import createHttpError from 'http-errors'
 import { Logger } from 'winston'
-import { ROLES } from '../constants'
 
 export class UserController {
   constructor(
@@ -20,7 +19,7 @@ export class UserController {
       return
     }
 
-    const { firstName, lastName, email, password } = req.body
+    const { firstName, lastName, email, password, tenantId, role } = req.body
 
     try {
       const user = await this.userService.create({
@@ -28,7 +27,8 @@ export class UserController {
         lastName,
         email,
         password,
-        role: ROLES.MANAGER,
+        role,
+        tenantId,
       })
       res.status(201).json({ id: user.id })
     } catch (err) {
