@@ -5,7 +5,7 @@
    "main": "index.js",
    "scripts": {
       "dev": "cross-env NODE_ENV=dev nodemon src/server.ts",
-      "build":"tsc",
+      "build": "tsc",
       "format:fix": "prettier . --write",
       "format:check": "prettier . --check",
       "lint": "eslint .",
@@ -25,7 +25,7 @@
    "license": "ISC",
    "devDependencies": {
       "@eslint/js": "^9.17.0",
-      "@types/bcrypt": "^5.0.2",
+      "@types/bcryptjs": "^2.4.6",
       "@types/cookie-parser": "^1.4.8",
       "@types/express": "^5.0.0",
       "@types/http-errors": "^2.0.4",
@@ -54,7 +54,7 @@
       ]
    },
    "dependencies": {
-      "bcrypt": "^5.1.1",
+      "bcryptjs": "^2.4.3",
       "cookie-parser": "^1.4.7",
       "dotenv": "^16.4.7",
       "express": "^4.21.2",
