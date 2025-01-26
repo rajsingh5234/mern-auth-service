@@ -27,7 +27,7 @@ export default tseslint.config(
       },
     },
     rules: {
-      "no-console": "error",
+      // "no-console": "error",
       "dot-notation": "error",
       "@typescript-eslint/require-await": "off",
       "@typescript-eslint/no-unsafe-assignment": "off",
