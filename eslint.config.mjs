@@ -27,11 +27,10 @@ export default tseslint.config(
       },
     },
     rules: {
-      // "no-console": "error",
-      // "dot-notation": "error",
-      '@typescript-eslint/no-misused-promises': 'off',
-      '@typescript-eslint/no-unsafe-argument': 'off',
-      '@typescript-eslint/no-explicit-any': 'off',
+      "no-console": "error",
+      "dot-notation": "error",
+      "@typescript-eslint/require-await": "off",
+      "@typescript-eslint/no-unsafe-assignment": "off",
     },
   },
 )
