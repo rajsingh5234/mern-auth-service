@@ -9,6 +9,8 @@ import { canAccess } from '../middlewares/canAccess'
 import { ROLES } from '../constants'
 import tenantValidator from '../validators/tenant-validator'
 import { CreateTenantRequest } from '../types'
+import listTenantsValidator from '../validators/list-tenants-validator'
+import { Request } from 'express-jwt'
 
 const router = express.Router()
 
@@ -36,7 +38,12 @@ router.patch(
     tenantController.update(req, res, next),
 )
 
-router.get('/', (req, res, next) => tenantController.getAll(req, res, next))
+router.get(
+  '/',
+  listTenantsValidator,
+  (req: Request, res: Response, next: NextFunction) =>
+    tenantController.getAll(req, res, next),
+)
 router.get('/:id', authenticate, canAccess([ROLES.ADMIN]), (req, res, next) =>
   tenantController.getOne(req, res, next),
 )
